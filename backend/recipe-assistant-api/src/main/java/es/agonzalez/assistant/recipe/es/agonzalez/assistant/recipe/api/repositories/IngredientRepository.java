@@ -10,6 +10,6 @@ import es.agonzalez.assistant.recipe.es.agonzalez.assistant.recipe.api.models.In
 
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, UUID> {
-    Optional<Ingredient> findByName(String name);
+    Optional<Ingredient> findByNameIgnoreCase(String name);
     
 }
