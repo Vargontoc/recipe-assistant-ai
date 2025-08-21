@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16
+    container_name: prai_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Recass123!
+      POSTGRES_DB: recipe_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: prai_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.test
+      PGADMIN_DEFAULT_PASSWORD: 1234
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+  
+  ollama:
+    image: ollama/ollama:latest
+    container_name: prai_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+
+volumes:
+  dbdata:
+  ollama:
