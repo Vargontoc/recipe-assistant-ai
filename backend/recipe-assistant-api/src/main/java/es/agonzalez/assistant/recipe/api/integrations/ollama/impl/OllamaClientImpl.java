@@ -8,7 +8,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -17,17 +16,23 @@ import es.agonzalez.assistant.recipe.api.config.AiProperties;
 import es.agonzalez.assistant.recipe.api.integrations.ollama.GenerateRequest;
 import es.agonzalez.assistant.recipe.api.integrations.ollama.GenerateResponse;
 import es.agonzalez.assistant.recipe.api.integrations.ollama.OllamaClient;
+import io.micrometer.core.instrument.MeterRegistry;
 
 @Service
 public class OllamaClientImpl implements OllamaClient{
 
     @Autowired
     private  AiProperties props;
+    @Autowired
+    private MeterRegistry registry;
     private final RestTemplate restTemplate = buildTemplate();
 
-    @SuppressWarnings("null")
     @Override
     public String generate(String prompt) {
+        return io.micrometer.core.instrument.Timer.builder("ollma.generate.latency").tag("model", props.getModel()).register(registry).record(() -> doCall(prompt));
+    }
+
+    private String doCall(String prompt)  {
         String url = props.getUrl().replace("/+$", "") + "/api/generate";
         GenerateRequest request = new GenerateRequest(props.getModel(), prompt, false, 0.2);
 
@@ -57,10 +62,7 @@ public class OllamaClientImpl implements OllamaClient{
     }
 
     private RestTemplate buildTemplate() {
-        var factory = new HttpComponentsClientHttpRequestFactory();
-        int timeout = 20_000;
-        factory.setConnectTimeout(timeout);
-        return new RestTemplate(factory);
+        return new RestTemplate();
     }
 
 }

@@ -1,4 +1,4 @@
-package es.agonzalez.assistant.recipe.es.agonzalez.assistant.recipe.api;
+package es.agonzalez.assistant.recipe.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
