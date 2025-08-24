@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -34,22 +35,32 @@ public class OllamaClientImpl implements OllamaClient{
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<GenerateRequest> req = new HttpEntity<>(request, headers);
-        try {
-            ResponseEntity<GenerateResponse> response = restTemplate.exchange(url, HttpMethod.POST, req, GenerateResponse.class);
-            if(response == null || !response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
-                throw new IllegalStateException("Unexpected AI response: " + response.getStatusCode());
-            }
 
-            return response.getBody().response();   
-        } catch (RestClientException e) {
-            throw new IllegalStateException("Could not connect with AI: " + e.getMessage(), e);
+        int attempts = 0;
+        RestClientException last = null;
+        while(attempts++ < 2) {
+            try {
+                ResponseEntity<GenerateResponse> response = restTemplate.exchange(url, HttpMethod.POST, req, GenerateResponse.class);
+                if(response == null || !response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+                    throw new IllegalStateException("Unexpected AI response: " + response.getStatusCode());
+                }
+    
+                return response.getBody().response();   
+            } catch (RestClientException e) {
+                last = e;
+
+                try { Thread.sleep(300L * attempts); } catch (InterruptedException ignored) {}
+            }
         }
+
+        throw new IllegalStateException("Could connect IA Server " + (last != null ? last.getMessage() : "Unknown"));
     }
 
     private RestTemplate buildTemplate() {
-        var rt = new RestTemplate();
-        // Add any custom configuration to the RestTemplate if needed
-        return rt;
+        var factory = new HttpComponentsClientHttpRequestFactory();
+        int timeout = 20_000;
+        factory.setConnectTimeout(timeout);
+        return new RestTemplate(factory);
     }
 
 }

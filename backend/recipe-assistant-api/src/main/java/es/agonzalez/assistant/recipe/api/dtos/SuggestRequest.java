@@ -5,14 +5,12 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class SuggestRequest{
     @NotEmpty
     @JsonProperty("ingredients")
     private List<@Size(min=1, max=80) String> ingredients;
-    @NotNull
     @JsonProperty("preferences")
     private Preferences preferences;
 
