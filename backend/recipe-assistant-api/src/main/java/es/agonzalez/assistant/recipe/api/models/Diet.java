@@ -12,6 +12,6 @@ public enum Diet {
     DAIRY_FREE,
     GLUTEN_FREE,
     NUT_FREE,
-    HALAL,
+    NONE,
     KOSHER
 }
