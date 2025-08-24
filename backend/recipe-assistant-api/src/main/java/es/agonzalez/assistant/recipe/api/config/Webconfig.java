@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class Webconfig {
+public class Webconfig implements  WebMvcConfigurer{
     
     @Primary  
     public WebMvcConfigurer corsConfigurar() {
@@ -14,10 +14,11 @@ public class Webconfig {
             @SuppressWarnings("null")
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+                
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173") // Allow all origins
+                        .allowedOrigins("*") // Allow all origins
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH") // Allow specific HTTP methods
-                        .allowedHeaders("*"); // Allow all headers
+                        .allowedHeaders("*").allowCredentials(false); // Allow all headers
             }
             
             

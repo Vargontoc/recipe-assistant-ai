@@ -1,6 +1,7 @@
 package es.agonzalez.assistant.recipe.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +14,7 @@ import es.agonzalez.assistant.recipe.api.services.UserPreferencesService;
 import jakarta.validation.Valid;
 
 
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/preferences")
 public class UserPreferencesController

@@ -11,6 +11,9 @@ export const useRecipesStore = defineStore('recipes', {
         page: 0,
         size: 10
     }),
+    getters: {
+        totalPages: (s) => Math.ceil(s.total / s.size) || 1
+    },
     actions: {
         async fetch() {
             this.loading = true
@@ -19,6 +22,14 @@ export const useRecipesStore = defineStore('recipes', {
                 this.items = data.content
                 this.total = data.totalElements
             }finally { this.loading = false }
+        },
+        setQuery(q: string) {
+            this.q = q
+            this.page = 0
+            return this.fetch()
+        },
+        goTo(p: number) {
+            this.page = Math.max(0, Math.min(p, this.totalPages - 1))
         }
     }
 })
