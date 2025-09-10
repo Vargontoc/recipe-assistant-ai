@@ -28,7 +28,7 @@ public class UserPreferencesServiceImpl implements UserPreferencesService {
     @Override
     public PreferencesResponse update(PreferencesUpdateRequest request) {
        var entity = repository.findAll().stream().findFirst().orElseGet(() -> repository.save(new UserPreferences()));
-       entity.setAllergns(request.allergns());
+       entity.setAllergens(request.allergens());
        entity.setDiet(request.diet());
        entity.setExcludeIngredients(normalize(request.excludes()));
 
@@ -41,6 +41,6 @@ public class UserPreferencesServiceImpl implements UserPreferencesService {
     }
 
     private PreferencesResponse toResponse(UserPreferences entity) {
-        return new PreferencesResponse(entity.getId(), entity.getDiet(), entity.getExcludeIngredients(), entity.getAllergns());
+        return new PreferencesResponse(entity.getId(), entity.getDiet(), entity.getExcludeIngredients(), entity.getAllergens());
     }
 }

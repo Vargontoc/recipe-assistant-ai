@@ -36,9 +36,9 @@ public class UserPreferences extends BaseEntity {
     private Set<String> excludeIngredients = new HashSet<>();
 
     @ElementCollection
-    @CollectionTable(name="user_pref_allergns", joinColumns= @JoinColumn(name="pref_id"))
-    @Column(name="ingredients", length=60)
-    private Set<String> allergns = new HashSet<>();
+    @CollectionTable(name="user_pref_allergens", joinColumns= @JoinColumn(name="pref_id"))
+    @Column(name="allergen", length=60)
+    private Set<String> allergens = new HashSet<>();
 
     public UUID getId() {
         return id;
@@ -64,12 +64,12 @@ public class UserPreferences extends BaseEntity {
         this.excludeIngredients = excludeIngredients;
     }
 
-    public Set<String> getAllergns() {
-        return allergns;
+    public Set<String> getAllergens() {
+        return allergens;
     }
 
-    public void setAllergns(Set<String> allergns) {
-        this.allergns = allergns;
+    public void setAllergens(Set<String> allergens) {
+        this.allergens = allergens;
     }
 
     

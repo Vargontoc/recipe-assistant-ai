@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.agonzalez.assistant.recipe.api.dtos.IngredientResponse;
 import es.agonzalez.assistant.recipe.api.dtos.RecipeCreateRequest;
@@ -22,7 +23,6 @@ import es.agonzalez.assistant.recipe.api.repositories.IngredientRepository;
 import es.agonzalez.assistant.recipe.api.repositories.RecipeRepository;
 import es.agonzalez.assistant.recipe.api.services.RecipeService;
 import io.micrometer.common.util.StringUtils;
-import jakarta.transaction.Transactional;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -60,7 +60,7 @@ public class RecipeServiceImpl implements RecipeService {
         
 
         Recipe recipe = new Recipe();
-            recipe.setTitle(recipeCreateRequest.tittle());
+            recipe.setTitle(recipeCreateRequest.title());
             recipe.setSummary(recipeCreateRequest.summary());
             recipe.setSteps(recipeCreateRequest.steps());
             recipe.setTags(Optional.ofNullable(recipeCreateRequest.tags()).orElseGet(Set::of).stream().map(String::trim).filter(s -> !s.isBlank()).collect(Collectors.toSet()));

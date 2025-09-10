@@ -9,4 +9,4 @@ import jakarta.validation.constraints.Size;
 public record PreferencesUpdateRequest(
     @NotNull Diet diet,
     Set<@Size(max=60)String> excludes,
-    Set<@Size(max=60)String> allergns)  {}
+    Set<@Size(max=60)String> allergens)  {}

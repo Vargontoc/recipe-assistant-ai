@@ -56,7 +56,7 @@ public class SuggestionServiceImpl implements SuggestionService {
         Preferences preferences = new Preferences();
         preferences.setDiet(preferencesResponse.diet());
         preferences.setExludeIngredients(preferencesResponse.excludes());
-        preferences.setAllergens(preferencesResponse.allergns());
+        preferences.setAllergens(preferencesResponse.allergens());
         return preferences;
     }
 
