@@ -22,6 +22,8 @@ import es.agonzalez.assistant.recipe.api.dtos.SuggestRequest;
 import es.agonzalez.assistant.recipe.api.dtos.SuggestResponse;
 import es.agonzalez.assistant.recipe.api.services.RecipeService;
 import es.agonzalez.assistant.recipe.api.services.SuggestionService;
+import es.agonzalez.assistant.recipe.api.services.MetricsService;
+import io.micrometer.core.instrument.Timer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -38,6 +40,8 @@ public class RecipeController {
     private  RecipeService recipeService;
     @Autowired
     private SuggestionService suggestService;
+    @Autowired
+    private MetricsService metricsService;
     
     @GetMapping
     @Operation(summary = "Search recipes", description = "Simple search by title or tags")
@@ -45,7 +49,14 @@ public class RecipeController {
         @RequestParam(required = false) String q,
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size) {
-        return recipeService.search(q, PageRequest.of(Math.max(0, page), Math.min(100, Math.max(1, size))));
+        
+        Timer.Sample sample = metricsService.startSearchTimer();
+        try {
+            metricsService.recordSearch("simple");
+            return recipeService.search(q, PageRequest.of(Math.max(0, page), Math.min(100, Math.max(1, size))));
+        } finally {
+            metricsService.recordSearchDuration(sample);
+        }
     }
     
     @PostMapping("/search/advanced")
@@ -59,9 +70,15 @@ public class RecipeController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         
-        PageRequest pageable = PageRequest.of(Math.max(0, page), Math.min(100, Math.max(1, size)));
-        Page<RecipeResponse> results = recipeService.advancedSearch(request, pageable);
-        return ResponseEntity.ok(results);
+        Timer.Sample sample = metricsService.startSearchTimer();
+        try {
+            metricsService.recordSearch("advanced");
+            PageRequest pageable = PageRequest.of(Math.max(0, page), Math.min(100, Math.max(1, size)));
+            Page<RecipeResponse> results = recipeService.advancedSearch(request, pageable);
+            return ResponseEntity.ok(results);
+        } finally {
+            metricsService.recordSearchDuration(sample);
+        }
     }
 
     @GetMapping("/search/filters")
@@ -77,7 +94,7 @@ public class RecipeController {
     @GetMapping("/{id}")
     @Operation(summary = "Get recipe by ID", description = "Retrieve a specific recipe by its ID")
     public RecipeResponse get(@PathVariable @Parameter(description = "Recipe ID") UUID id) {
-        
+        metricsService.recordRecipeView(id.toString());
         return recipeService.get(id);
     }
 

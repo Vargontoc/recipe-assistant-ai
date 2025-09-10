@@ -8,6 +8,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -53,6 +55,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    @Cacheable(value = "recipes", key = "#id")
     public RecipeResponse get(UUID id) {
         Recipe r = recipeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Recipe not found with id: " + id));
         return toResponse(r);
@@ -60,6 +63,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "recipes", allEntries = true)
     public RecipeResponse create(RecipeCreateRequest recipeCreateRequest) {
         
 
@@ -117,6 +121,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    @Cacheable(value = "search-filters", cacheManager = "staticDataCacheManager")
     @Transactional(readOnly = true)
     public SearchFiltersResponse getSearchFilters() {
         List<String> availableIngredients = recipeRepository.findDistinctIngredients();
