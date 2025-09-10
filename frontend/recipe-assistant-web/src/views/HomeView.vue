@@ -1,176 +1,295 @@
 <template>
-  <div class="home-view">
+  <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50">
     <!-- Hero Section -->
-    <div class="hero-section bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12 mb-8 rounded-lg">
-      <div class="text-center">
-        <h1 class="text-4xl font-bold mb-4">¡Bienvenido a Recipe Assistant AI!</h1>
-        <p class="text-xl mb-6 text-blue-100">
-          Descubre, guarda y califica tus recetas favoritas
-        </p>
-        
-        <!-- Quick Actions -->
-        <div class="flex flex-wrap justify-center gap-4 max-w-2xl mx-auto">
-          <router-link
-            to="/search"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
-          >
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-            Búsqueda Avanzada
-          </router-link>
+    <section class="relative py-20 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-10"></div>
+      <div class="relative max-w-7xl mx-auto px-6">
+        <div class="text-center">
+          <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+              Recipe Assistant AI
+            </span>
+            <div class="text-4xl md:text-5xl mt-2">🤖👨‍🍳✨</div>
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Tu asistente culinario inteligente que transforma ingredientes simples en 
+            <span class="font-semibold text-indigo-600">experiencias gastronómicas extraordinarias</span>
+          </p>
           
+          <!-- Main CTA -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+            <router-link
+              to="/suggest"
+              class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            >
+              <span class="text-2xl">🎯</span>
+              Crear Receta con IA
+              <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </router-link>
+            
+            <router-link
+              to="/search"
+              class="inline-flex items-center gap-2 px-6 py-3 border-2 border-indigo-600 text-indigo-600 rounded-xl font-semibold hover:bg-indigo-50 transition-colors"
+            >
+              <span>🔍</span>
+              Explorar Recetas
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            ¿Qué hace especial a nuestro asistente?
+          </h2>
+          <p class="text-xl text-gray-600">
+            Tecnología de inteligencia artificial para llevarte de ingredientes a obra maestra
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- AI Recipe Generation -->
+          <div class="group p-8 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🤖</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Generación Inteligente</h3>
+            <p class="text-gray-600 mb-4">
+              Ingresa tus ingredientes disponibles y nuestra IA creará recetas personalizadas al instante
+            </p>
+            <router-link to="/suggest" class="text-green-600 font-semibold hover:text-green-700">
+              Probar ahora →
+            </router-link>
+          </div>
+
+          <!-- Smart Search -->
+          <div class="group p-8 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">🎯</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Búsqueda Inteligente</h3>
+            <p class="text-gray-600 mb-4">
+              Encuentra recetas con filtros avanzados: dietas, alergias, tiempo de cocción y más
+            </p>
+            <router-link to="/search" class="text-blue-600 font-semibold hover:text-blue-700">
+              Explorar →
+            </router-link>
+          </div>
+
+          <!-- Personalization -->
+          <div class="group p-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl border border-purple-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div class="text-4xl mb-4 group-hover:scale-110 transition-transform">💝</div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Personalización Total</h3>
+            <p class="text-gray-600 mb-4">
+              Guarda favoritos, califica recetas y obtén recomendaciones basadas en tus gustos
+            </p>
+            <router-link to="/favorites" class="text-purple-600 font-semibold hover:text-purple-700">
+              Ver favoritos →
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Cómo funciona la magia
+          </h2>
+          <p class="text-xl text-gray-600">
+            Solo 3 pasos para tu próxima comida perfecta
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">
+              1
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Ingredientes</h3>
+            <p class="text-gray-600">
+              Simplemente dinos qué tienes en tu nevera o despensa
+            </p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-r from-green-600 to-teal-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">
+              2
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">IA Trabaja</h3>
+            <p class="text-gray-600">
+              Nuestra inteligencia artificial analiza y crea recetas únicas
+            </p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-r from-orange-600 to-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">
+              3
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">¡A Cocinar!</h3>
+            <p class="text-gray-600">
+              Recibe instrucciones paso a paso para crear tu obra maestra
+            </p>
+          </div>
+        </div>
+        
+        <div class="text-center mt-12">
           <router-link
             to="/suggest"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300"
           >
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
-            </svg>
-            Sugerir Receta
-          </router-link>
-          
-          <router-link
-            to="/favorites"
-            class="inline-flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-colors"
-          >
-            <span class="text-lg">💝</span>
-            Mis Favoritos
+            <span class="text-xl">🚀</span>
+            Empezar Ahora
           </router-link>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Main Content -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-      <!-- Main Content -->
-      <section class="lg:col-span-3 space-y-6">
-        <!-- Search Bar -->
-        <div class="search-section bg-white p-6 rounded-lg shadow-md">
-          <div class="flex flex-col sm:flex-row sm:items-center gap-3">
-            <h2 class="text-2xl font-bold flex-1">Explorar Recetas</h2>
-            <div class="flex items-center gap-2 w-full sm:w-80">
-              <input 
-                v-model="search" 
-                @keyup.enter="applySearch" 
-                type="text" 
-                placeholder="Buscar por título o tag..." 
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
-              />
-              <button 
-                @click="applySearch"
-                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Buscar
-              </button>
-            </div>
+    <!-- Recent Recipes Section -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Recetas Populares</h2>
+            <p class="text-gray-600">Descubre las creaciones más valoradas por nuestra comunidad</p>
           </div>
+          <router-link
+            to="/search"
+            class="hidden md:inline-flex items-center gap-2 px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Ver todas
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </router-link>
         </div>
 
         <!-- Loading State -->
-        <LoadingState v-if="loading" message="Cargando recetas..." />
+        <LoadingState v-if="loading" message="Cargando recetas populares..." />
 
-        <!-- Results -->
-        <div v-else>
-          <!-- No Results -->
-          <EmptyState 
-            v-if="items.length === 0"
-            message="No se encontraron recetas"
-            description="Intenta con otros términos de búsqueda o explora nuestras sugerencias"
-            icon="🔍"
+        <!-- Recipes Grid -->
+        <div v-else-if="items.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <RecipeCard
+            v-for="recipe in items.slice(0, 6)"
+            :key="recipe.id"
+            :recipe="recipe"
+            @favorite-toggled="handleFavoriteToggle"
+          />
+        </div>
+
+        <!-- Empty State -->
+        <div v-else class="text-center py-12">
+          <div class="text-6xl mb-4">🍳</div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">
+            ¡Sé el primero en crear una receta!
+          </h3>
+          <p class="text-gray-600 mb-6">
+            Usa nuestro asistente IA para crear la primera receta de la comunidad
+          </p>
+          <router-link
+            to="/suggest"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
           >
-            <template #action>
-              <div class="flex gap-3">
-                <router-link
-                  to="/search"
-                  class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Búsqueda avanzada
-                </router-link>
-                <router-link
-                  to="/suggest"
-                  class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                >
-                  Sugerir receta
-                </router-link>
-              </div>
-            </template>
-          </EmptyState>
+            <span>✨</span>
+            Crear Primera Receta
+          </router-link>
+        </div>
+      </div>
+    </section>
 
-          <!-- Recipe Grid -->
-          <div v-else class="space-y-6">
-            <!-- Results Info -->
-            <div class="flex items-center justify-between">
-              <div class="text-sm text-gray-600">
-                Mostrando {{ items.length }} recetas
-                <span v-if="search">para "<span class="font-semibold">{{ search }}</span>"</span>
-              </div>
-              <button
-                v-if="search"
-                @click="clearSearch"
-                class="text-sm text-blue-600 hover:text-blue-700 font-medium"
-              >
-                Limpiar búsqueda
-              </button>
-            </div>
-
-            <!-- Grid -->
-            <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-              <recipe-card 
-                v-for="recipe in items" 
-                :key="recipe.id" 
-                :recipe="recipe"
-                class="hover:shadow-lg transition-shadow"
-              />
-            </div>
-
-            <!-- Pagination -->
-            <div class="mt-8" v-if="totalPages > 1">
-              <pagination-component 
-                :page="page" 
-                :total-pages="totalPages" 
-                @change="goTo"
-              />
-            </div>
+    <!-- Stats Section -->
+    <section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div>
+            <div class="text-3xl md:text-4xl font-bold mb-2">{{ userStats.totalFavorites || 0 }}</div>
+            <div class="text-indigo-200">Favoritos Guardados</div>
+          </div>
+          <div>
+            <div class="text-3xl md:text-4xl font-bold mb-2">{{ userStats.totalSearches || 0 }}</div>
+            <div class="text-indigo-200">Búsquedas Realizadas</div>
+          </div>
+          <div>
+            <div class="text-3xl md:text-4xl font-bold mb-2">{{ totalRecipes }}</div>
+            <div class="text-indigo-200">Recetas Disponibles</div>
+          </div>
+          <div>
+            <div class="text-3xl md:text-4xl font-bold mb-2">∞</div>
+            <div class="text-indigo-200">Posibilidades IA</div>
           </div>
         </div>
-      </section>
-
-      <!-- Sidebar -->
-      <aside class="lg:col-span-1">
-        <div class="sticky top-24">
-          <UserStatsWidget />
-        </div>
-      </aside>
-    </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-import { useRecipesStore } from '../stores/RecipeStore';
-import { storeToRefs } from 'pinia';
-import RecipeCard from '../components/RecipeCard.vue';
-import PaginationComponent from '../components/PaginationComponent.vue';
-import LoadingState from '../components/LoadingState.vue';
-import EmptyState from '../components/EmptyState.vue';
-import UserStatsWidget from '../components/UserStatsWidget.vue';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import RecipeCard from '../components/RecipeCard.vue'
+import LoadingState from '../components/LoadingState.vue'
+import { http, favoritesService, searchHistoryService } from '../services'
 
-const store = useRecipesStore();
-const search = ref(store.q);
+const router = useRouter()
 
-const applySearch = () => store.setQuery(search.value || '');
-const clearSearch = () => {
-  search.value = '';
-  store.setQuery('');
-};
-const goTo = (p: number) => store.goTo(p);
+// Reactive data
+const loading = ref(true)
+const items = ref<any[]>([])
+const totalRecipes = ref(0)
+const userStats = ref({
+  totalFavorites: 0,
+  totalSearches: 0
+})
 
+// Methods
+const loadPopularRecipes = async () => {
+  try {
+    loading.value = true
+    const response = await http.get('/recipes', {
+      params: { page: 0, size: 6, sort: 'averageRating,desc' }
+    })
+    items.value = response.data.content || []
+    totalRecipes.value = response.data.totalElements || 0
+  } catch (error) {
+    console.error('Error loading recipes:', error)
+    items.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
+const loadUserStats = async () => {
+  try {
+    const [favoritesCount, searchStats] = await Promise.all([
+      favoritesService.getUserFavoriteCount(),
+      searchHistoryService.getUserSearchStats()
+    ])
+    
+    userStats.value = {
+      totalFavorites: favoritesCount,
+      totalSearches: searchStats.totalSearches
+    }
+  } catch (error) {
+    console.error('Error loading user stats:', error)
+  }
+}
+
+const handleFavoriteToggle = (recipeId: string, isFavorited: boolean) => {
+  // Update local stats
+  if (isFavorited) {
+    userStats.value.totalFavorites++
+  } else {
+    userStats.value.totalFavorites--
+  }
+}
+
+// Lifecycle
 onMounted(() => {
-  if (!store.items.length) store.fetch();
-});
-
-watch(() => store.size, () => store.goTo(0));
-
-const { items, loading, totalPages, page } = storeToRefs(store);
+  loadPopularRecipes()
+  loadUserStats()
+})
 </script>

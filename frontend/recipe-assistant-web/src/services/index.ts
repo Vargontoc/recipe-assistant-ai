@@ -249,3 +249,58 @@ export const searchHistoryService = {
         return response.data;
     }
 };
+
+// AI Suggestions API Service
+export interface SuggestRequest {
+    ingredients: string[];
+    preferences?: {
+        diet?: string;
+        excludeIngredients?: string[];
+        allergens?: string[];
+    };
+}
+
+export interface SuggestResponse {
+    title: string;
+    summary: string;
+    steps: string[];
+    tags: string[];
+}
+
+export interface RecipeSuggestion {
+    id: string;
+    userIdentifier: string;
+    requestIngredients: string[];
+    preferences?: any;
+    generatedRecipe: SuggestResponse;
+    createdAt: string;
+}
+
+export const suggestService = {
+    // Get AI recipe suggestions
+    async getSuggestions(request: SuggestRequest): Promise<SuggestResponse> {
+        const response = await http.post('/recipes/suggest', request);
+        return response.data;
+    },
+
+    // Get user's suggestion history
+    async getSuggestionHistory(page = 0, size = 10) {
+        const response = await http.get('/v1/suggestions/history', {
+            params: { page, size }
+        });
+        return response.data;
+    },
+
+    // Save a generated suggestion
+    async saveSuggestion(suggestion: SuggestResponse): Promise<void> {
+        await http.post('/v1/suggestions/save', suggestion);
+    },
+
+    // Get recent suggestions
+    async getRecentSuggestions(limit = 5): Promise<RecipeSuggestion[]> {
+        const response = await http.get('/v1/suggestions/recent', {
+            params: { limit }
+        });
+        return response.data;
+    }
+};

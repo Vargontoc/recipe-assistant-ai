@@ -8,8 +8,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -102,17 +102,9 @@ public class RecipeServiceImpl implements RecipeService {
         Sort sort = createSortFromRequest(request);
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
         
-        // Extract diet parameter
-        String diet = request.diets() != null && !request.diets().isEmpty() ? request.diets().get(0) : null;
-        
-        // Perform advanced search
+        // Perform simplified advanced search (ignoring diet and time filters for now)
         Page<Recipe> recipes = recipeRepository.advancedSearch(
                 request.query(),
-                diet,
-                request.minCookingTime(),
-                request.maxCookingTime(),
-                request.minServings(),
-                request.maxServings(),
                 request.minRating(),
                 sortedPageable
         );

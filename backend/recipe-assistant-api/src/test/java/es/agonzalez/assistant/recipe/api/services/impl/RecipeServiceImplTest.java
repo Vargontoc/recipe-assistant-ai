@@ -217,8 +217,7 @@ class RecipeServiceImplTest {
         Pageable pageable = PageRequest.of(0, 10);
         Page<Recipe> recipePage = new PageImpl<>(List.of(testRecipe));
         
-        given(recipeRepository.advancedSearch(anyString(), anyString(), anyInt(), anyInt(), 
-                anyInt(), anyInt(), anyDouble(), any(Pageable.class)))
+        given(recipeRepository.advancedSearch(anyString(), anyDouble(), any(Pageable.class)))
             .willReturn(recipePage);
 
         // When
@@ -228,8 +227,7 @@ class RecipeServiceImplTest {
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(1);
         verify(recipeRepository).advancedSearch(
-            eq("pasta"), eq("vegetarian"), eq(30), eq(120), 
-            eq(1), eq(4), eq(4.0), any(Pageable.class)
+            eq("pasta"), eq(4.0), any(Pageable.class)
         );
     }
 

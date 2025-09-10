@@ -26,14 +26,7 @@ services:
       - "5050:80"
     depends_on:
       - db
-  
-  ollama:
-    image: ollama/ollama:latest
-    container_name: prai_ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama:/root/.ollama
+
 
 volumes:
   dbdata:

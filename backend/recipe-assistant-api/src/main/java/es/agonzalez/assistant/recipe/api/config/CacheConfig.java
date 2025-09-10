@@ -1,14 +1,16 @@
 package es.agonzalez.assistant.recipe.api.config;
 
-import com.github.benmanes.caffeine.cache.Caffeine;
+import java.time.Duration;
+import java.util.Arrays;
+
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
-import java.time.Duration;
-import java.util.Arrays;
+import com.github.benmanes.caffeine.cache.Caffeine;
 
 /**
  * Cache configuration for improving application performance
@@ -21,6 +23,7 @@ public class CacheConfig {
      * Configure Caffeine cache manager with different cache configurations
      */
     @Bean
+    @Primary
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();
         
