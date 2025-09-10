@@ -12,13 +12,18 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "ingredients", uniqueConstraints= {
-    @UniqueConstraint(columnNames = {"name"}, name="uk_ingredient_name"),
-})
+@Table(name = "ingredients", 
+    uniqueConstraints= {
+        @UniqueConstraint(columnNames = {"name"}, name="uk_ingredient_name")
+    },
+    indexes = {
+        @Index(name = "idx_ingredient_name", columnList = "name")
+    })
 public class Ingredient extends BaseEntity {
     
     @Id

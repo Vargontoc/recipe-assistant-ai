@@ -1,6 +1,5 @@
 package es.agonzalez.assistant.recipe.api.services.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -8,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,17 +33,14 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Page<RecipeResponse> search(String q, Pageable pageable) {
         Page<Recipe> page;
-        if(StringUtils.isEmpty(q)) {
+        if (StringUtils.isEmpty(q)) {
             page = recipeRepository.findAll(pageable);
-        }else {
-            List<Recipe> recipes = recipeRepository.searchByTitleOrTag(q);
-            int start = (int)pageable.getOffset();
-            int end = Math.min(start + pageable.getPageSize(), recipes.size());
-            List<Recipe> content = (start <= end) ? recipes.subList(start, end) : List.of();
-            page = new PageImpl<>(content, pageable, recipes.size());
+        } else {
+            // Use optimized paginated search instead of manual pagination
+            page = recipeRepository.searchByTitleOrTag(q, pageable);
         }
-
-        return page.map(this::toResponse); // Placeholder return
+        
+        return page.map(this::toResponse);
     }
 
     @Override

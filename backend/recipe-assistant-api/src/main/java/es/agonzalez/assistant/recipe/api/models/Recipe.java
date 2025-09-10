@@ -15,11 +15,15 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "recipes")
+@Table(name = "recipes", indexes = {
+    @Index(name = "idx_recipe_title", columnList = "title"),
+    @Index(name = "idx_recipe_created_at", columnList = "created_at")
+})
 public class Recipe extends BaseEntity {
     @Id
     @GeneratedValue

@@ -13,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 import es.agonzalez.assistant.recipe.api.dtos.SuggestRequest;
 import es.agonzalez.assistant.recipe.api.dtos.SuggestResponse;
 import es.agonzalez.assistant.recipe.api.integrations.multiagent.MultiAgentClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 
@@ -35,6 +37,8 @@ public class MultiAgentClientImpl implements MultiAgentClient {
     }
 
     @Override
+    @CircuitBreaker(name = "multiagent-service", fallbackMethod = "fallbackGenerateRecipeSuggestions")
+    @Retry(name = "multiagent-service")
     public SuggestResponse generateRecipeSuggestions(SuggestRequest request) {
         return Timer.builder("multiagent.recipe.generation")
                 .tag("service", "recipe-assistant")
@@ -48,7 +52,7 @@ public class MultiAgentClientImpl implements MultiAgentClient {
             
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            
+        
             HttpEntity<SuggestRequest> requestEntity = new HttpEntity<>(request, headers);
             
             ResponseEntity<SuggestResponse> response = restTemplate.exchange(
@@ -78,5 +82,17 @@ public class MultiAgentClientImpl implements MultiAgentClient {
         } catch (RestClientException e) {
             return false;
         }
+    }
+
+    /**
+     * Fallback method for circuit breaker when multi-agent service is unavailable
+     */
+    public SuggestResponse fallbackGenerateRecipeSuggestions(SuggestRequest request, Exception ex) {
+        return new SuggestResponse(
+            "Service Unavailable",
+            "The recipe generation service is temporarily unavailable. Please try again later.",
+            java.util.List.of("Check your ingredients and try a simpler recipe"),
+            java.util.Set.of("fallback", "service-unavailable")
+        );
     }
 }
