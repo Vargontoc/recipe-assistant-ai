@@ -48,6 +48,9 @@ public class Recipe extends BaseEntity {
     @OneToMany(mappedBy = "recipe", orphanRemoval = true, cascade= CascadeType.ALL)
     private List<RecipeIngredient> ingredients = new ArrayList<>();
 
+    @OneToMany(mappedBy = "recipe", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<RecipeRating> ratings = new ArrayList<>();
+
     public void addIngredient(RecipeIngredient ingredient) {
         if (ingredient != null) {
             ingredient.setRecipe(this);
@@ -108,6 +111,49 @@ public class Recipe extends BaseEntity {
 
     public void setIngredients(List<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public List<RecipeRating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<RecipeRating> ratings) {
+        this.ratings = ratings;
+    }
+
+    // Helper methods for ratings
+    public void addRating(RecipeRating rating) {
+        if (rating != null) {
+            rating.setRecipe(this);
+            this.ratings.add(rating);
+        }
+    }
+
+    public void removeRating(RecipeRating rating) {
+        if (rating != null) {
+            rating.setRecipe(null);
+            this.ratings.remove(rating);
+        }
+    }
+
+    /**
+     * Calculate average rating for this recipe
+     */
+    public Double getAverageRating() {
+        if (ratings == null || ratings.isEmpty()) {
+            return null;
+        }
+        return ratings.stream()
+                .mapToInt(RecipeRating::getRating)
+                .average()
+                .orElse(0.0);
+    }
+
+    /**
+     * Get total number of ratings
+     */
+    public Integer getRatingCount() {
+        return ratings != null ? ratings.size() : 0;
     }
 
     
