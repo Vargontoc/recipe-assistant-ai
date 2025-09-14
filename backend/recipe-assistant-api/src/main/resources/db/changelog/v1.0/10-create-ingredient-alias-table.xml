@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="10-create-ingredient-alias-table" author="agonzalez">
+        <createTable tableName="ingredient_alias">
+            <column name="ingredient_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alias" type="VARCHAR(120)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint 
+            baseTableName="ingredient_alias" 
+            baseColumnNames="ingredient_id"
+            constraintName="fk_ingredient_alias_ingredient"
+            referencedTableName="ingredients"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <createIndex 
+            tableName="ingredient_alias" 
+            indexName="idx_ingredient_alias_ingredient">
+            <column name="ingredient_id"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="ingredient_alias" 
+            indexName="idx_ingredient_alias_alias">
+            <column name="alias"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="ingredient_alias"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

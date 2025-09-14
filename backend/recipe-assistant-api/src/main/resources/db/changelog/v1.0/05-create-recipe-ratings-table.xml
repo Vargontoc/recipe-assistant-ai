@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="05-create-recipe-ratings-table" author="agonzalez">
+        <createTable tableName="recipe_ratings">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="recipe_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_identifier" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint 
+            baseTableName="recipe_ratings" 
+            baseColumnNames="recipe_id"
+            constraintName="fk_recipe_ratings_recipe"
+            referencedTableName="recipes"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <addUniqueConstraint 
+            tableName="recipe_ratings" 
+            columnNames="recipe_id,user_identifier" 
+            constraintName="uk_recipe_rating_user"/>
+
+        <createIndex 
+            tableName="recipe_ratings" 
+            indexName="idx_recipe_ratings_recipe">
+            <column name="recipe_id"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="recipe_ratings" 
+            indexName="idx_recipe_ratings_user">
+            <column name="user_identifier"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="recipe_ratings" 
+            indexName="idx_recipe_ratings_created">
+            <column name="created_at"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="recipe_ratings"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="09-create-suggestion-history-table" author="agonzalez">
+        <createTable tableName="suggestion_history">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="model_used" type="VARCHAR(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="input_ingredients" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="preferences_snapshot" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="response_title" type="VARCHAR(200)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="response_body" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="duration_ms" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex 
+            tableName="suggestion_history" 
+            indexName="ix_sugg_hist_created_at">
+            <column name="created_at"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="suggestion_history" 
+            indexName="idx_suggestion_history_model">
+            <column name="model_used"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="suggestion_history"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

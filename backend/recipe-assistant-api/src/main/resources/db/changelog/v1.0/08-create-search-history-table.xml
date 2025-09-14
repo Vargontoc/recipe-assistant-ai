@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="08-create-search-history-table" author="agonzalez">
+        <createTable tableName="search_history">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_identifier" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="search_query" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="search_type" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="results_count" type="INTEGER">
+                <constraints nullable="true"/>
+            </column>
+            <column name="filters_applied" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="execution_time_ms" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex 
+            tableName="search_history" 
+            indexName="idx_search_history_user">
+            <column name="user_identifier"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="search_history" 
+            indexName="idx_search_history_created">
+            <column name="created_at"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="search_history" 
+            indexName="idx_search_history_query">
+            <column name="search_query"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="search_history"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

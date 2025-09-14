@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Include all changelogs -->
+    <include file="db/changelog/v1.0/01-create-ingredients-table.xml"/>
+    <include file="db/changelog/v1.0/02-create-recipes-table.xml"/>
+    <include file="db/changelog/v1.0/03-create-recipe-ingredients-table.xml"/>
+    <include file="db/changelog/v1.0/04-create-recipe-tags-table.xml"/>
+    <include file="db/changelog/v1.0/05-create-recipe-ratings-table.xml"/>
+    <include file="db/changelog/v1.0/06-create-recipe-favorites-table.xml"/>
+    <include file="db/changelog/v1.0/07-create-user-preferences-table.xml"/>
+    <include file="db/changelog/v1.0/08-create-search-history-table.xml"/>
+    <include file="db/changelog/v1.0/09-create-suggestion-history-table.xml"/>
+    <include file="db/changelog/v1.0/10-create-ingredient-alias-table.xml"/>
+    <include file="db/changelog/v1.0/11-create-user-preferences-tables.xml"/>
+    <include file="db/changelog/v1.0/12-insert-common-ingredients.xml"/>
+
+</databaseChangeLog>

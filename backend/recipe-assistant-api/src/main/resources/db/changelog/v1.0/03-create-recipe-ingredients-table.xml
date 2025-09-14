@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="03-create-recipe-ingredients-table" author="agonzalez">
+        <createTable tableName="recipe_ingredients">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="recipe_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ingredient_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unit" type="VARCHAR(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint 
+            baseTableName="recipe_ingredients" 
+            baseColumnNames="recipe_id"
+            constraintName="fk_recipe_ingredients_recipe"
+            referencedTableName="recipes"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint 
+            baseTableName="recipe_ingredients" 
+            baseColumnNames="ingredient_id"
+            constraintName="fk_recipe_ingredients_ingredient"
+            referencedTableName="ingredients"
+            referencedColumnNames="id"/>
+
+        <createIndex 
+            tableName="recipe_ingredients" 
+            indexName="idx_recipe_ingredients_recipe">
+            <column name="recipe_id"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="recipe_ingredients" 
+            indexName="idx_recipe_ingredients_ingredient">
+            <column name="ingredient_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="recipe_ingredients"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

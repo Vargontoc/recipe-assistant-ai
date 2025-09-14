@@ -74,7 +74,6 @@ class RecipeRatingServiceImplTest {
             .rating(5)
             .comment("Excellent recipe!")
             .userIdentifier(testUserId)
-            .isAnonymous(false)
             .build();
         testRating.setId(testRatingId);
         testRating.setCreatedAt(Instant.now());
@@ -148,7 +147,6 @@ class RecipeRatingServiceImplTest {
             .rating(4)
             .comment("Good recipe")
             .userIdentifier(testUserId)
-            .isAnonymous(false)
             .build();
         updatedRating.setId(testRatingId);
         updatedRating.setCreatedAt(Instant.now());
@@ -371,7 +369,6 @@ class RecipeRatingServiceImplTest {
             .rating(4)
             .comment("Good recipe")
             .userIdentifier("anonymous")
-            .isAnonymous(true)
             .build();
         anonymousRating.setId(UUID.randomUUID());
         anonymousRating.setCreatedAt(Instant.now());
@@ -389,6 +386,5 @@ class RecipeRatingServiceImplTest {
         assertThat(result).isNotNull();
         assertThat(result.rating()).isEqualTo(4);
         assertThat(result.userIdentifier()).isEqualTo("anonymous");
-        assertThat(result.isAnonymous()).isTrue();
     }
 }

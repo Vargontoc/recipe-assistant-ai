@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="11-create-user-preferences-tables" author="agonzalez">
+        <createTable tableName="user_pref_excluded">
+            <column name="pref_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ingredients" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_pref_allergens">
+            <column name="pref_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="allergen" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint 
+            baseTableName="user_pref_excluded" 
+            baseColumnNames="pref_id"
+            constraintName="fk_user_pref_excluded_preferences"
+            referencedTableName="user_preferences"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint 
+            baseTableName="user_pref_allergens" 
+            baseColumnNames="pref_id"
+            constraintName="fk_user_pref_allergens_preferences"
+            referencedTableName="user_preferences"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <createIndex 
+            tableName="user_pref_excluded" 
+            indexName="idx_user_pref_excluded_pref">
+            <column name="pref_id"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="user_pref_allergens" 
+            indexName="idx_user_pref_allergens_pref">
+            <column name="pref_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="user_pref_excluded"/>
+            <dropTable tableName="user_pref_allergens"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

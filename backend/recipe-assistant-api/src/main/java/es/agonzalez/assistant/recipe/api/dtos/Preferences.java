@@ -5,11 +5,10 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import es.agonzalez.assistant.recipe.api.models.Diet;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class Preferences {
-    @NotNull 
+    
     @JsonProperty("diet")
     private Diet diet;
     @JsonProperty("exludeIngredients")

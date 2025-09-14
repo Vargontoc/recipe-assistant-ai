@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="12-insert-common-ingredients" author="agonzalez">
+        <comment>Insert common ingredients to bootstrap the database</comment>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Tomate"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Cebolla"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Ajo"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Aceite de oliva"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Sal"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Pimienta"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Huevo"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Harina"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Azúcar"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+        
+        <insert tableName="ingredients">
+            <column name="id" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Leche"/>
+            <column name="created_at" valueDate="now()"/>
+            <column name="updated_at" valueDate="now()"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="ingredients">
+                <where>name IN ('Tomate', 'Cebolla', 'Ajo', 'Aceite de oliva', 'Sal', 'Pimienta', 'Huevo', 'Harina', 'Azúcar', 'Leche')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

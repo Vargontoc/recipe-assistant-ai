@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="01-create-ingredients-table" author="agonzalez">
+        <createTable tableName="ingredients">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(120)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint 
+            tableName="ingredients" 
+            columnNames="name" 
+            constraintName="uk_ingredient_name"/>
+
+        <createIndex 
+            tableName="ingredients" 
+            indexName="idx_ingredient_name">
+            <column name="name"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="ingredients"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

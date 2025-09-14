@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="06-create-recipe-favorites-table" author="agonzalez">
+        <createTable tableName="recipe_favorites">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="recipe_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_identifier" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint 
+            baseTableName="recipe_favorites" 
+            baseColumnNames="recipe_id"
+            constraintName="fk_recipe_favorites_recipe"
+            referencedTableName="recipes"
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <addUniqueConstraint 
+            tableName="recipe_favorites" 
+            columnNames="recipe_id,user_identifier" 
+            constraintName="uk_recipe_favorite_user_recipe"/>
+
+        <createIndex 
+            tableName="recipe_favorites" 
+            indexName="idx_recipe_favorite_user">
+            <column name="user_identifier"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="recipe_favorites" 
+            indexName="idx_recipe_favorite_recipe">
+            <column name="recipe_id"/>
+        </createIndex>
+
+        <createIndex 
+            tableName="recipe_favorites" 
+            indexName="idx_recipe_favorite_created">
+            <column name="created_at"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="recipe_favorites"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

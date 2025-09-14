@@ -55,8 +55,7 @@ public class RecipeRating extends BaseEntity {
     @Size(max = 500, message = "Comment must not exceed 500 characters")
     private String comment;
 
-    @Column(name = "is_anonymous", nullable = false)
-    private Boolean isAnonymous = true;
+
 
     // Constructors
     public RecipeRating() {}
@@ -115,17 +114,7 @@ public class RecipeRating extends BaseEntity {
         this.comment = comment;
     }
 
-    public Boolean getIsAnonymous() {
-        return isAnonymous;
-    }
 
-    public void setIsAnonymous(Boolean isAnonymous) {
-        this.isAnonymous = isAnonymous;
-    }
-
-    public boolean isAnonymous() {
-        return isAnonymous != null && isAnonymous;
-    }
 
     // Builder pattern
     public static Builder builder() {
@@ -137,7 +126,6 @@ public class RecipeRating extends BaseEntity {
         private Integer rating;
         private String comment;
         private String userIdentifier;
-        private Boolean isAnonymous = true;
 
         public Builder recipe(Recipe recipe) {
             this.recipe = recipe;
@@ -159,10 +147,7 @@ public class RecipeRating extends BaseEntity {
             return this;
         }
 
-        public Builder isAnonymous(Boolean isAnonymous) {
-            this.isAnonymous = isAnonymous;
-            return this;
-        }
+
 
         public RecipeRating build() {
             RecipeRating entity = new RecipeRating();
@@ -170,7 +155,6 @@ public class RecipeRating extends BaseEntity {
             entity.setRating(this.rating);
             entity.setComment(this.comment);
             entity.setUserIdentifier(this.userIdentifier);
-            entity.setIsAnonymous(this.isAnonymous);
             return entity;
         }
     }
@@ -181,7 +165,6 @@ public class RecipeRating extends BaseEntity {
                 "id=" + id +
                 ", rating=" + rating +
                 ", userIdentifier='" + userIdentifier + '\'' +
-                ", isAnonymous=" + isAnonymous +
                 '}';
     }
 }

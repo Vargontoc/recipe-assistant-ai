@@ -14,7 +14,6 @@ public record RecipeRatingResponse(
         Integer rating,
         String comment,
         String userIdentifier,
-        boolean isAnonymous,
         
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdAt,

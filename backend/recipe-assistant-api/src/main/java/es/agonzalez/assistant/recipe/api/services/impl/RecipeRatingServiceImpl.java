@@ -57,7 +57,6 @@ public class RecipeRatingServiceImpl implements RecipeRatingService {
                 .rating(request.rating())
                 .comment(request.comment())
                 .userIdentifier(userIdentifier)
-                .isAnonymous(request.userIdentifier() == null)
                 .build();
 
         RecipeRating savedRating = ratingRepository.save(rating);
@@ -187,7 +186,6 @@ public class RecipeRatingServiceImpl implements RecipeRatingService {
                 rating.getRating(),
                 rating.getComment(),
                 rating.getUserIdentifier(),
-                rating.isAnonymous(),
                 rating.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime(),
                 rating.getUpdatedAt().atZone(java.time.ZoneId.systemDefault()).toLocalDateTime()
         );
